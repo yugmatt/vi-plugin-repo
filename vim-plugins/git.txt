@@ -1,0 +1,36 @@
+useful git commands
+====================
+
+
+add a new submodule and update git
+===================================
+git submodule add https://github.com/tpope/vim-fugitive.git bundle/fugitive
+git add .
+git commit -m "Install git fugitive plugin"
+
+Update all the bundle vim plugins at once..
+============================================
+git submodule foreach git pull origin master
+git submodule update --init --recursive // YouCompleteME needs it
+cd ~/.vim/bundle/youcompleteme
+./install.py --clang-completer // install latest clang
+
+
+syncronizing to other pc
+=========================
+cd ~
+git clone <git-url> ~/.vim
+ln -s ~/.vim/vimrc ~/.vimrc
+ln -s ~/.vim/gvimrc ~/.gvimrc
+cd ~/.vim
+git submodule init
+git submodule update
+
+remove git submodule
+=====================
+git config -f .gitmodules --remove-section submodule.bundle/ccvext
+git config -f .git/config --remove-section submodule.bundle/ccvext
+git rm --cached bundle/ccvext
+git add .gitmodules
+git commit -m "Remove submodule submodule_name"
+rm -rf bundle/ccvext

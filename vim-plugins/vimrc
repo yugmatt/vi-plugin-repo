@@ -1,0 +1,95 @@
+set tabstop=3
+set sw=3
+set showtabline=1
+set expandtab
+set autoindent
+set smartindent
+set showmatch
+set vb t_vb=
+set ruler
+set nohls
+set incsearch
+set noai
+set number
+set ls=2
+set hlsearch
+set title
+set nocp
+" preserve buffers for undoing changes later
+set undodir=~/.vim/undodir
+set undofile
+syntax on
+filetype plugin indent on
+
+" replace trailing white spaces
+autocmd BufWritePre * :%s/\s\+$//e
+
+" tcl highlight for .tem files
+syntax on
+filetype on
+au BufNewFile,BufRead *.tem set filetype=tcl
+
+" supertab
+let g:SuperTabDefaultCompletionType = "context"
+
+" Tag settings
+set tags+=./tags;\
+
+" Key maps
+map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+map <silent><F3> :NEXTCOLOR<cr>
+map <silent><F2> :PREVCOLOR<cr>
+nnoremap <M-Right> <C-W><Right>
+nnoremap <M-Left> <C-W><Left>
+nnoremap <M-Up> <C-W><Up>
+nnoremap <M-Down> <C-W><Down>
+imap <M-o> <Esc>o
+
+" cscop refrence list
+map <silent><F8> :cnext<cr>
+map <silent><F9> :cprev<cr>
+
+" Color shemes
+colorscheme vibrantink
+colorscheme wombat256
+" colorscheme vividchalk
+
+" Auto preview
+let g:AutoPreview_enabled = 0
+nnoremap <F2> :TagbarToggle<CR>
+nnoremap <F3> :NERDTreeClose<CR>
+nnoremap <F4> :NERDTreeFind<CR>
+nnoremap <F5> :AutoPreviewToggle<CR>
+
+"quickfix
+set cscopequickfix=s-,c-,d-,i-,t-,e-
+map <silent><F8> :cnext<cr>
+map <silent><F9> :cprev<cr>
+
+" pathogen
+call pathogen#infect()
+
+" ragtag
+let g:ragtag_global_maps = 1
+
+" open a split buffer in a new tab
+nmap t% :tabedit %<CR>
+nmap td :tabclose<CR>
+
+" fugitive git"
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+
+"Add highlighting for function definition in C++
+function! EnhanceCppSyntax()
+  syn match cppFuncDef "::\~\?\zs\h\w*\ze([^)]*\()\s*\(const\)\?\)\?$"
+  hi def link cppFuncDef Special
+endfunction
+autocmd Syntax cpp call EnhanceCppSyntax()
+
+" default behaviour for makefiles
+autocmd FileType make set noexpandtab tabstop=8 shiftwidth=8
+
+" :e ++ff=dos to set hide control chars at the end like ^M
+map  <C-l> :tabn<CR>
+map  <C-h> :tabp<CR>
+map  <C-n> :tabnew<CR>
